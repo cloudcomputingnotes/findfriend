@@ -4,7 +4,11 @@
   "description": "Find friends",
   "main": "index.js",
   "scripts": {
+    "start": node server/server.js,
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "10.14.2"
   },
   "author": "Steve Zhang",
   "license": "ISC",
