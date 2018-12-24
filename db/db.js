@@ -1,26 +1,24 @@
 const {MongoClient} = require('mongodb');
-const {log} = require('../utils/utils');
+const {log, today} = require('../utils/utils');
 const assert = require('assert');
 
 var mongodburl = 'mongodb://localhost:27017';
-const dbName = 'ffgames';
-const colletionName = 'games';
+const dbName = 'find_friend';
+const colletionName = 'G' + today();
 
-var createNewGame = function (game, callback){
-
+var createNewGame = (game, callback) => {
     const client = new MongoClient(mongodburl);
-
-    // Use connect method to connect to the Server
     client.connect((err) =>{
         assert.strictEqual(null, err);
-        log("Connected successfully to server");
-    
-        const db = client.db(dbName);
+        const db =  client.db(dbName);
         const collection = db.collection(colletionName);
-
-        // Insert some documents
+        
         collection.insertMany(game, (err, result) => {
-            log(JSON.stringify(err, undefined, 4));
+            if (err)
+            {
+                log(JSON.stringify(err, undefined, 4));
+                return;
+            }
             callback(result);
         });
     
@@ -28,8 +26,39 @@ var createNewGame = function (game, callback){
     });
 };
 
+var getAllGames = (callback) =>{
+
+    const client = new MongoClient(mongodburl);
+    client.connect((err) =>{
+        assert.strictEqual(null, err);
+        const db =  client.db(dbName);
+        const collection = db.collection(colletionName);
+        
+        collection.find({}).toArray((err, docs) =>{
+            assert.equal(err, null);
+            callback(docs);
+        });
+    
+      client.close();
+    });
+
+};
+
+const findDocuments = function(db, callback) {
+    // Get the documents collection
+    const collection = db.collection('documents');
+    // Find some documents
+    collection.find({}).toArray(function(err, docs) {
+      assert.equal(err, null);
+      console.log("Found the following records");
+      console.log(docs)
+      callback(docs);
+    });
+  }
+
 module.exports ={
-    createNewGame
+    createNewGame, 
+    getAllGames
 };
 
 

@@ -3,7 +3,7 @@ const assert = require('assert');
 
 var app = new express();
 const {log} = require('../utils/utils');
-var {createNewGame} = require('../db/db');
+var {createNewGame,getAllGames} = require('../db/db');
 
 var game = [
     {name: "test1"},
@@ -11,10 +11,13 @@ var game = [
     {name: "test2"}
 ];
 
-createNewGame(game, (err, result)=>{
-    //assert.strictEqual(err, null);
-    log(JSON.stringify(err, undefined, 4));
+createNewGame(game, (result)=>{
     log(JSON.stringify(result, undefined, 4));
+});
+
+getAllGames( (games) =>{
+    log(JSON.stringify(games, undefined, 4));
+
 });
 
 return; 
