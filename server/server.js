@@ -1,20 +1,21 @@
 const express = require('express');
 
 var app = new express();
+var {today} = require('../utils/utils');
 
-const port = process.env.PORT || git 3000;
+const port = process.env.PORT || 3000;
 
-app.get('', () =>{
+app.get('/getcurrentgame', () =>{
     console.log('this is get');
-})
+});
 
 app.post('/setupnewgame', () => {
     console.log('setting up new game');
     var game = {
-        date: new Date.toString, 
+        date: today(), 
         players: []
     }
-})
+});
 
 app.listen(port, () => {
     console.log(`findfriend listening at port ${port} `);
