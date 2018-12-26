@@ -1,10 +1,33 @@
 const {MongoClient} = require('mongodb');
 const {log, today} = require('../utils/utils');
+const mongoose = require('mongoose');
 const assert = require('assert');
 
 var mongodburl = 'mongodb://localhost:27017';
 const dbName = 'find_friend';
 const colletionName = 'G' + today();
+
+var Game = Mongress.Model('Game', {
+    gameid: {
+        type: string, 
+        required: true, 
+        trim: true
+    },
+    name: {
+        type: string, 
+        required: true,
+        minlength: 3, 
+        trim: true
+    },
+    level: {
+        type: string, 
+        default: '3'
+    }});
+
+var game = new Game({
+    gameid: '1',
+    name: 'Steve'
+});
 
 var createNewGame = (game, callback) => {
     const client = new MongoClient(mongodburl);
