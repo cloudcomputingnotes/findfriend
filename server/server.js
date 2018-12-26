@@ -11,21 +11,26 @@ var game = [
     {name: "test2"}
 ];
 
-createNewGame(game, (result)=>{
-    log(JSON.stringify(result, undefined, 4));
-});
+// createNewGame(game, (result)=>{
+//     log(JSON.stringify(result, undefined, 4));
+// });
 
-getAllGames( (games) =>{
-    log(JSON.stringify(games, undefined, 4));
+// getAllGames( (games) =>{
+//     log(JSON.stringify(games, undefined, 4));
 
-});
+// });
 
-return; 
+// return; 
 
 const port = process.env.PORT || 3000;
 
-app.get('/getcurrentgame', () =>{
+app.get('/', function (req, res) {
+    res.send('hello world')
+  })
+
+app.get('/getcurrentgame', (req, res) =>{
     log('this is get');
+    res.send(game);
 });
 
 app.post('/setupnewgame', () => {
@@ -37,5 +42,5 @@ app.post('/setupnewgame', () => {
 });
 
 app.listen(port, () => {
-    utils.log(`findfriend listening at port ${port} `);
+    log(`findfriend listening at port ${port} `);
 })
