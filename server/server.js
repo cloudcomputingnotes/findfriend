@@ -1,9 +1,12 @@
 const express = require('express');
 const assert = require('assert');
+const bodyparser = require('bodyparser');
+
+const {log, today} = require('../utils/utils');
+var {createNewGame,getAllGames} = require('../db/db');
 
 var app = new express();
-const {log} = require('../utils/utils');
-var {createNewGame,getAllGames} = require('../db/db');
+app.use(bodypar.json());
 
 var game = [
     {name: "test1"},
@@ -33,10 +36,10 @@ app.get('/getcurrentgame', (req, res) =>{
     res.send(game);
 });
 
-app.post('/setupnewgame', () => {
+app.post('/newgame', (req, res) => {
     log('setting up new game');
     var game = {
-        date: utils.today(), 
+        date: today(), 
         players: []
     }
 });
